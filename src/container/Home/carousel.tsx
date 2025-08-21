@@ -45,7 +45,7 @@ const CarouselHome = () => {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((item, index) => (
-          <div key={index} className="min-w-full relative  h-[800px] ">
+          <div key={index} className="min-w-full relative  h-[250px] md:h-[600px] ">
             <Image
               src={item.src}
               alt={`Slide ${index + 1}`}
@@ -59,10 +59,10 @@ const CarouselHome = () => {
 
       {/* Overlay */}
       <div className="absolute top-1/2 left-25 transform -translate-y-1/2 text-white text-left">
-        <p className="text-lg mb-2">T-Shirt / Tops</p>
-        <h1 className="text-4xl md:text-5xl font-bold">{images[currentIndex].caption}</h1>
+        <p className=" text-m md:text-lg mb-2">T-Shirt / Tops</p>
+        <h1 className="text-2xl md:text-4xl font-bold">{images[currentIndex].caption}</h1>
         <p className="text-xl mt-3">cool / colorful / comfy</p>
-        <button className="mt-5 px-6 py-3 text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
+        <button className="mt-5 px-6 py-3  text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
           Shop Now
         </button>
       </div>
