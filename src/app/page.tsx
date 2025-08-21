@@ -1,8 +1,12 @@
 import Header from "@/components/Header";
+import Homecontainer from "@/container/Home";
 
 
 export default function Home() {
   return (
-    <Header/>
+    <div>
+      <Header/>
+      <Homecontainer/>
+    </div>
   );
 }
