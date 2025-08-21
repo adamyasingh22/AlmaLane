@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from "@/components/UI/button";
 import Image from "next/image";
 
 const images = [
@@ -27,7 +28,7 @@ const Deals = () => {
       {images.map((image) => (
         <div
           key={image.id}
-          className="relative w-full rounded-xl overflow-hidden flex items-center text-white font-bold h-[300px] md:h-[400px] "
+          className="relative w-full rounded-xl overflow-hidden flex items-center text-white font-bold h-[200px] md:h-[400px] "
         >
           {/* Background Image */}
           <Image
@@ -42,9 +43,12 @@ const Deals = () => {
             <p className="text-sm md:text-base mb-2">{image.subtitle}</p>
             <h1 className="text-xl md:text-2xl font-bold">{image.title}</h1>
             <p className="text-lg md:text-xl mt-2">{image.description}</p>
-            <button className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
+            {/* <button className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
               Shop Now
-            </button>
+            </button> */}
+            <Button variant="primary" size="sm" className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md">
+                Shop Now
+            </Button>
           </div>
         </div>
       ))}
