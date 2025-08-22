@@ -46,7 +46,7 @@ const Deals = () => {
             {/* <button className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
               Shop Now
             </button> */}
-            <Button variant="primary" size="sm" className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md">
+            <Button variant="primary" size="sm" className="mt-4 px-5 py-2 md:px-6 md:py-3 text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
                 Shop Now
             </Button>
           </div>
