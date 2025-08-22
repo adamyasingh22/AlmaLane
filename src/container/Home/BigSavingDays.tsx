@@ -68,7 +68,7 @@ const BigSavingDays = () => {
         {cardData.map((item) => (
           <div
             key={item.id}
-            className="relative h-[350px] md:h-[200px] sm:h-[100px] rounded-xl overflow-hidden group"
+            className="relative h-[350px] md:h-[300px] sm:h-[100px] rounded-xl overflow-hidden group"
           >
             {/* Background Image */}
             <Image

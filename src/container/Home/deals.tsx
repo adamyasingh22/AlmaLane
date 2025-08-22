@@ -28,7 +28,7 @@ const Deals = () => {
       {images.map((image) => (
         <div
           key={image.id}
-          className="relative w-full rounded-xl overflow-hidden flex items-center text-white font-bold h-[200px] md:h-[400px] "
+          className="relative w-full rounded-xl overflow-hidden flex items-center text-white font-bold h-[200px] md:h-[400px]  "
         >
           {/* Background Image */}
           <Image

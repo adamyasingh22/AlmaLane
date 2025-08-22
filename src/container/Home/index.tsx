@@ -1,4 +1,5 @@
 'use client'
+import Banner from "./banner";
 import BigSavingDays from "./BigSavingDays";
 import CarouselHome from "./carousel";
 import Deals from "./deals";
@@ -14,6 +15,7 @@ export default function Homecontainer() {
       <Deals/>
       <NewArrivals/>
       <BigSavingDays/>
+      <Banner/>
     </div>
   );
 };
