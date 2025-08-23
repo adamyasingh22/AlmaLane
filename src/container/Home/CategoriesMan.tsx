@@ -53,13 +53,13 @@ const categoriesMen = [
   },
 ];
 
-const CategoriesMen = () => {
+const CategoriesMen = ({ heading }: { heading: string }) => {
   return (
     <div className="w-[90%] mx-auto p-5 flex flex-col">
       {/* Heading */}
       <div className="flex items-center h-[50px] justify-start gap-3 mb-8">
         <div className="w-2 h-8 rounded-full bg-gradient-to-b from-violet-500 to-violet-700"></div>
-        <h1 className="text-2xl font-bold text-black">Categories For Men</h1>
+        <h1 className="text-2xl font-bold text-black">{heading}</h1>
       </div>
 
       {/* Grid */}

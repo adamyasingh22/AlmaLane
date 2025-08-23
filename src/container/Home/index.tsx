@@ -1,6 +1,7 @@
 'use client'
 import Banner from "./banner";
 import BigSavingDays from "./BigSavingDays";
+import BrandDeals from "./BrandDeals";
 import CarouselHome from "./carousel";
 import CategoriesMen from "./CategoriesMan";
 import Deals from "./deals";
@@ -17,7 +18,9 @@ export default function Homecontainer() {
       <NewArrivals/>
       <BigSavingDays/>
       <Banner/>
-      <CategoriesMen/>
+      <CategoriesMen heading="Categories For Him"/>
+      <CategoriesMen heading="Categories For Her"/>
+      <BrandDeals/>
     </div>
   );
 };
