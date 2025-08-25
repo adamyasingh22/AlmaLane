@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import CategoriesContainer from "@/container/CategoriesContainer";
 
-const CategoriesPage = () => {
+const ProductPage = () => {
     return (
         <div>
             <Header/>
@@ -9,4 +9,4 @@ const CategoriesPage = () => {
         </div>
     );
 }
-export default CategoriesPage;
+export default ProductPage;
