@@ -18,7 +18,7 @@ export default function Header(){
                    <Link href="/" className="text-foreground hover:text-primary transition-colors">
                      Home
                    </Link>
-                   <Link href="/products" className="text-foreground hover:text-primary transition-colors">
+                   <Link href="/Product" className="text-foreground hover:text-primary transition-colors">
                      Products
                    </Link>
                    <Link href="/categories" className="text-foreground hover:text-primary transition-colors">

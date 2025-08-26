@@ -1,12 +1,13 @@
 'use client'
-import CategoryFilter from "@/components/Category-filter";
-import { useState } from "react";
+import Filter from "./filter";
 
 export default function CategoriesContainer () {
-    const [selectedCategory, setSelectedCategory] = useState("all")
     return (
-    <div>
-        <CategoryFilter onCategoryChange={setSelectedCategory} activeCategory={selectedCategory}/>
+    <div className="flex w-full p-5 gap-5">
+    {/* Sidebar */}
+      <div className="w-1/5 min-w-[200px] bg-gray-100 p-3 rounded-xl">
+        <Filter />
+      </div>
     </div>
     );
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { fetchCategories } from "@/lib/api"
-import { Button } from "../UI/button"
+import Image from "next/image";
 
 interface CategoryFilterProps {
   onCategoryChange: (category: string) => void
@@ -11,7 +11,6 @@ interface CategoryFilterProps {
 
 export default function CategoryFilter({ onCategoryChange, activeCategory }: CategoryFilterProps) {
   const [categories, setCategories] = useState<string[]>([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadCategories() {
@@ -22,7 +21,6 @@ export default function CategoryFilter({ onCategoryChange, activeCategory }: Cat
         console.error("Failed to load categories:", error)
         setCategories(["all"])
       } finally {
-        setLoading(false)
       }
     }
 
@@ -37,35 +35,33 @@ export default function CategoryFilter({ onCategoryChange, activeCategory }: Cat
       .join(" ")
   }
 
-  if (loading) {
-    return (
-      <div className="mb-8">
-        <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Shop by Category</h2>
-        <div className="flex flex-wrap gap-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-9 w-24 bg-muted animate-pulse rounded-md" />
-          ))}
+return (
+  <div className="mb-8">
+    {categories.map((item) => (
+      <div
+        key={item}
+        className={`w-full flex flex-col p-1 cursor-pointer transition-colors ${
+            activeCategory === item
+              ? "bg-gray-200 border border-gray-400"
+              : "hover:bg-gray-100"
+          }`}
+        onClick={() => onCategoryChange(item)}
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs text-black">
+            {formatCategoryName(item)}
+          </h3>
+          <Image
+            src="/arrow.png"
+            alt="arrow"
+            width={14}
+            height={14}
+            className="bg-gray-100 p-1 rounded hover:bg-gray-600"
+          />
         </div>
       </div>
-    )
-  }
+    ))}
+  </div>
+)
 
-  return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Shop by Category</h2>
-      <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <Button
-            key={category}
-            variant={activeCategory === category ? "primary" : "outline"}
-            size="sm"
-            onClick={() => onCategoryChange(category)}
-            className="transition-all duration-200"
-          >
-            {formatCategoryName(category)}
-          </Button>
-        ))}
-      </div>
-    </div>
-  )
 }
