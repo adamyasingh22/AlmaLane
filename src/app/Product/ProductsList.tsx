@@ -15,4 +15,5 @@ export default function ProductsList({ products }: { products: Product[] }) {
       ))}
     </div>
   );
+  
 }
