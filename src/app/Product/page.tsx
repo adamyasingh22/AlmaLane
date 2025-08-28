@@ -1,8 +1,9 @@
-
+// app/product/page.tsx
 import Filters from "@/container/CategoriesContainer/filter";
 import type { Product, FilterOptions } from "./types";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
 interface ApiProduct {
   id: number;
   title: string;
@@ -18,7 +19,6 @@ interface ApiProduct {
 // Simulated fetch function
 async function getProducts(): Promise<Product[]> {
   const res = await fetch("https://fakestoreapi.com/products");
-
   const data: ApiProduct[] = await res.json();
 
   return data.map((item) => ({
@@ -32,25 +32,24 @@ async function getProducts(): Promise<Product[]> {
   }));
 }
 
-export default async function ProductsPage() {
+// ✅ Accept searchParams
+export default async function ProductsPage({ searchParams }: { searchParams: { category?: string } }) {
   const products = await getProducts();
 
-  // Default filters
   const defaultFilters: FilterOptions = {
     priceRange: [0, 1000],
-    category: "all",
+    category: searchParams.category || "all", 
     minRating: 0,
     inStock: false,
   };
 
   return (
     <div>
-        <Header/>
-    <div className="flex gap-6 p-6">
-      {/* Filters work client-side */}
-      <Filters products={products} defaultFilters={defaultFilters} />
-    </div>
-    <Footer/>
+      <Header />
+      <div className="flex gap-6 p-6">
+        <Filters products={products} defaultFilters={defaultFilters} />
+      </div>
+      <Footer />
     </div>
   );
 }

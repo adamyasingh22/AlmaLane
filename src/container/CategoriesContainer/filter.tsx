@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import type { Product, FilterOptions } from "../../app/Product/types";
 import ProductsList from "@/app/Product/ProductsList";
 
@@ -9,8 +10,19 @@ interface Props {
 }
 
 export default function Filters({ products, defaultFilters }: Props) {
-  const [filters, setFilters] = useState<FilterOptions>(defaultFilters);
+  const searchParams = useSearchParams();
+  const categoryFromUrl = searchParams.get("category") || "all";
+
+  const [filters, setFilters] = useState<FilterOptions>({
+    ...defaultFilters,
+    category: categoryFromUrl, // ✅ override category if query exists
+  });
+
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  
+  useEffect(() => {
+  setFilters((prev) => ({ ...prev, category: categoryFromUrl }));
+}, [categoryFromUrl]);
 
   useEffect(() => {
     let result = [...products];
@@ -47,7 +59,9 @@ export default function Filters({ products, defaultFilters }: Props) {
             }
             className="w-full"
           />
-          <p className="text-xs text-gray-500">Up to ${filters.priceRange[1]}</p>
+          <p className="text-xs text-gray-500">
+            Up to ${filters.priceRange[1]}
+          </p>
         </div>
 
         {/* Category */}
@@ -93,7 +107,10 @@ export default function Filters({ products, defaultFilters }: Props) {
               type="checkbox"
               checked={filters.inStock}
               onChange={(e) =>
-                setFilters((prev) => ({ ...prev, inStock: e.target.checked }))
+                setFilters((prev) => ({
+                  ...prev,
+                  inStock: e.target.checked,
+                }))
               }
             />
             In Stock Only
@@ -103,6 +120,9 @@ export default function Filters({ products, defaultFilters }: Props) {
 
       {/* Products */}
       <div className="flex-1">
+        <h3 className="font-bold text-lg mb-4">
+          {filters.category === "all" ? "All Products" : `Category: ${filters.category}`}
+        </h3>
         <ProductsList products={filteredProducts} />
       </div>
     </div>
