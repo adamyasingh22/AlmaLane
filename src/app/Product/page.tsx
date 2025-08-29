@@ -3,6 +3,7 @@ import Filters from "@/container/CategoriesContainer/filter";
 import type { Product, FilterOptions } from "./types";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CategoryDiscription from "@/container/CategoriesContainer/CategoryDiscription";
 
 interface ApiProduct {
   id: number;
@@ -49,6 +50,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
       <div className="flex gap-6 p-6">
         <Filters products={products} defaultFilters={defaultFilters} />
       </div>
+      <CategoryDiscription />
       <Footer />
     </div>
   );

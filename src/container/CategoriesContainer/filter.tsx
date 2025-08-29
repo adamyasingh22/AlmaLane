@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import type { Product, FilterOptions } from "../../app/Product/types";
 import ProductsList from "@/app/Product/ProductsList";
+import Image from "next/image";
 
 interface Props {
   products: Product[];
@@ -15,7 +16,7 @@ export default function Filters({ products, defaultFilters }: Props) {
 
   const [filters, setFilters] = useState<FilterOptions>({
     ...defaultFilters,
-    category: categoryFromUrl, // ✅ override category if query exists
+    category: categoryFromUrl, // 
   });
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
@@ -40,10 +41,20 @@ export default function Filters({ products, defaultFilters }: Props) {
   return (
     <div className="flex gap-6 w-full">
       {/* Sidebar */}
-      <div className="w-1/4 bg-gray-50 p-4 rounded-md shadow">
-        <h2 className="font-bold mb-3">Filters</h2>
+      <div className="w-1/4 bg-gray-50 p-6 rounded-md shadow">
+       <div className="w-full flex items-center justify-between">
+        <h2 className="text-lg font-bold text-gray-800">Filter</h2>
+        <Image
+          src="/filter.png"
+          alt="filter"
+          width={20}
+          height={20}
+          className="bg-gray-100 p-1 rounded-md cursor-pointer hover:bg-gray-600"
+        />
+       </div>  
+       <hr className="border-t border-gray-600 my-8" />      
 
-        {/* Price */}
+        {/* Price */} 
         <div className="mb-4">
           <label className="block text-sm">Price Range</label>
           <input

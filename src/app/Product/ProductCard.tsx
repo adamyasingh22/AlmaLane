@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
         src={product.image}
         alt={product.name}
         width={400}
-        height={300}
+        height={400}
         className="w-full h-56 object-cover"
       />
 
