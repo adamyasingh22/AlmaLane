@@ -32,10 +32,8 @@ async function getProducts(): Promise<Product[]> {
 }
 
 export default async function Header() {
-  // ✅ fetch on the server
   const products = await getProducts()
 
-  // ✅ extract unique categories
   const categories = Array.from(new Set(products.map((p) => p.category)))
 
   return (
