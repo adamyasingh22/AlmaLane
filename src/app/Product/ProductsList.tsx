@@ -6,7 +6,7 @@ import type { Product } from "./types";
 
 export default function ProductsList({ products }: { products: Product[] }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 9; // adjust as needed
+  const productsPerPage = 9; 
 
   if (products.length === 0) {
     return <p className="text-center text-gray-500">No products found.</p>;
