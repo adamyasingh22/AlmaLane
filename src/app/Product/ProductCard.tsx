@@ -3,10 +3,12 @@
 import Image from "next/image";
 import type { Product } from "./types";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function ProductCard({ product }: { product: Product }) {
     const [liked, setLiked] = useState(false);
   return (
+    <Link href={`/ProductDetail/${product.id}`} >
     <div
       className="relative flex flex-col rounded-2xl border shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 p-2"
     >
@@ -46,6 +48,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </button>
       </div>
     </div>
+    </Link>
   );
 }
 
