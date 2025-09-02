@@ -33,7 +33,7 @@ export default function Filters({ products, defaultFilters }: Props) {
         p.price >= filters.priceRange[0] &&
         p.price <= filters.priceRange[1] &&
         (filters.category === "all" || p.category === filters.category) &&
-        p.rating >= filters.minRating &&
+        p.rating.rate >= filters.minRating &&
         (!filters.inStock || p.inStock)
     );
     setFilteredProducts(result);

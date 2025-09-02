@@ -24,10 +24,10 @@ async function getProducts(): Promise<Product[]> {
 
   return data.map((item) => ({
     id: item.id,
-    name: item.title,
+    title: item.title,
     price: item.price,
     category: item.category,
-    rating: item.rating.rate,
+    rating: {rate: item.rating.rate , count: item.rating.count},
     image: item.image,
     inStock: true,
   }));

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ApiProduct } from "@/lib/api"   // ✅ use ApiProduct here
+import type { ApiProduct } from "@/lib/api" 
 import ProductCards from "@/components/UI/card"
 
 export default function ProductsList({ products }: { products: ApiProduct[] }) {

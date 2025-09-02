@@ -37,7 +37,7 @@ export default function ProductShowcase({ product }: { product: Product }) {
         <Image
           src={product.images[0]}
           alt={product.name}
-          width={300}
+          width={400}
           height={300}
           className=" object-cover"
         />

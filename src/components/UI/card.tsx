@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
 import { Button } from "@/components/UI/button"
-import type { ApiProduct } from "@/lib/api"   // ✅ use ApiProduct
+import type { ApiProduct } from "@/lib/api"
 
 interface ProductCardProps {
   product: ApiProduct
@@ -23,43 +23,44 @@ export default function ProductCards({ product }: ProductCardProps) {
   const handleToggleWishlist = () => setInWishlist(!inWishlist)
 
   return (
-    <div className="group relative border rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 bg-white overflow-hidden">
-      {/* Image */}
-      <Link href={`/products/${product.id}`}>
-        <div className="relative w-full h-48 cursor-pointer overflow-hidden">
-          <Image
-            src={product.image || "/placeholder.png"}
-            alt={product.title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          {discount > 0 && (
-            <span className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 text-xs rounded-md font-semibold">
-              -{discount}%
-            </span>
-          )}
-        </div>
+    <div className="group relative flex flex-col border rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 bg-white overflow-hidden">
+      {/* Image Section */}
+      <Link href={`/ProductDetail/${product.id}`} className="relative w-full h-60 sm:h-72 md:h-80 flex items-center justify-center overflow-hidden">
+        <Image
+          src={product.image || "/placeholder.png"}
+          alt={product.title}
+          className="object-contain max-h-full group-hover:scale-105 transition-transform duration-300"
+          width={250}
+          height={250}
+        />
+        {discount > 0 && (
+          <span className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 text-xs rounded-md font-semibold">
+            -{discount}%
+          </span>
+        )}
       </Link>
 
-      {/* Wishlist */}
+      {/* Wishlist Button */}
       <button
         onClick={handleToggleWishlist}
         className="absolute top-2 right-2 bg-white/80 hover:bg-white p-2 rounded-full transition"
       >
         <span
           className={`text-lg ${
-            inWishlist ? "text-red-500 scale-110" : "text-gray-500 hover:text-red-500 hover:scale-110"
+            inWishlist
+              ? "text-red-500 scale-110"
+              : "text-gray-500 hover:text-red-500 hover:scale-110"
           }`}
         >
           ♥
         </span>
       </button>
 
-      {/* Content */}
-      <div className="p-4 space-y-3">
+      {/* Content Section */}
+      <div className="flex flex-col flex-grow p-4 space-y-3">
         {/* Title */}
-        <Link href={`/products/${product.id}`}>
-          <h3 className="font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition cursor-pointer">
+        <Link href={`/ProductDetail/${product.id}`}>
+          <h3 className="font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition cursor-pointer text-sm sm:text-base md:text-lg">
             {product.title}
           </h3>
         </Link>
@@ -88,21 +89,23 @@ export default function ProductCards({ product }: ProductCardProps) {
         </div>
 
         {/* Cart Button */}
-        {productInCart ? (
-          <Link href="/cart">
-            <Button className="w-full transition-all duration-200 hover:scale-105">
-              Go to Cart
+        <div className="mt-auto">
+          {productInCart ? (
+            <Link href="/cart">
+              <Button className="w-full transition-all duration-200 hover:scale-105">
+                Go to Cart
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              className="w-full transition-all duration-200 hover:scale-105"
+              onClick={handleAddToCart}
+              aria-label={`Add ${product.title} to cart`}
+            >
+              Add to Cart
             </Button>
-          </Link>
-        ) : (
-          <Button
-            className="w-full transition-all duration-200 hover:scale-105"
-            onClick={handleAddToCart}
-            aria-label={`Add ${product.title} to cart`}
-          >
-            Add to Cart
-          </Button>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )
