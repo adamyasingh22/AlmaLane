@@ -2,7 +2,8 @@
 
 import type React from "react"
 import { createContext, useContext, useReducer, useEffect } from "react"
-import type { Product } from "@/lib/api"
+import type { ApiProduct } from "@/lib/api"
+
 
 export interface CartItem {
   id: number
@@ -20,7 +21,7 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: "ADD_ITEM"; payload: Product }
+  | { type: "ADD_ITEM"; payload: ApiProduct }
   | { type: "REMOVE_ITEM"; payload: number }
   | { type: "UPDATE_QUANTITY"; payload: { id: number; quantity: number } }
   | { type: "CLEAR_CART" }
@@ -113,7 +114,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 }
 
 interface CartContextType extends CartState {
-  addItem: (product: Product) => void
+  addItem: (product: ApiProduct) => void
   removeItem: (id: number) => void
   updateQuantity: (id: number, quantity: number) => void
   clearCart: () => void
@@ -143,7 +144,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("shopvibe-cart", JSON.stringify(state.items))
   }, [state.items])
 
-  const addItem = (product: Product) => {
+  const addItem = (product: ApiProduct) => {
     dispatch({ type: "ADD_ITEM", payload: product })
   }
 

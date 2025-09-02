@@ -1,88 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
-
-type CartItems = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  shipping: number;
-  category: string;
-  size: string;
-  image: string;
-};
-
-const cartData: CartItems[] = [
-  {
-    id: 1,
-    name: "Blue Flower Print Crop Top",
-    category: "Yellow",
-    size: "M",
-    price: 29,
-    shipping: 0,
-    image:
-      "/man6.jpg",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    name: "Lavender Hoodie",
-    category: "Lavender",
-    size: "XXL",
-    price: 119,
-    shipping: 0,
-    image:
-      "/man7.jpg",
-    quantity: 2,
-  },
-  {
-    id: 3,
-    name: "Black Sweatshirt",
-    category: "Black",
-    size: "XXL",
-    price: 123,
-    shipping: 5,
-    image:
-      "/man8.jpg",
-    quantity: 2,
-  },
-];
+import React from "react";
+import { CartItem, useCart } from "@/contexts/cart-context";
 
 export default function CartContainer() {
-  const [cart, setCart] = useState(cartData);
+  const {
+    items,
+    totalPrice,
+    updateQuantity,
+    removeItem,
+    clearCart,
+  } = useCart();
 
-  const handleQuantity = (id: number, type: "inc" | "dec") => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                type === "inc"
-                  ? item.quantity + 1
-                  : Math.max(1, item.quantity - 1),
-            }
-          : item
-      )
-    );
-  };
+  const calculateSubtotal = (item: CartItem): number => item.price * item.quantity;
+  const calculateShipping = (): number => (totalPrice > 100 ? 0 : 10);
 
-  const handleRemove = (id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const calculateSubtotal = (item: CartItems): number =>
-    item.price * item.quantity;
-
-  const calculateTotal = (): number =>
-    cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  const calculateShipping = (): number =>
-    cart.reduce((acc, item) => acc + item.shipping, 0);
-
-  const grandTotal = (): number => calculateTotal() + calculateShipping();
+  const grandTotal = (): number => totalPrice + calculateShipping();
 
   return (
     <div className="w-full my-10 font-sans">
@@ -91,13 +25,12 @@ export default function CartContainer() {
         <div>PRODUCT DETAILS</div>
         <div>PRICE</div>
         <div>QUANTITY</div>
-        <div>SHIPPING</div>
         <div>SUBTOTAL</div>
         <div>ACTION</div>
       </div>
 
       {/* Cart Items */}
-      {cart.map((item) => (
+      {items.map((item) => (
         <div
           key={item.id}
           className="grid grid-cols-[3fr_1fr_1fr_1fr_1fr_0.5fr] items-center px-10 py-6 border-b border-gray-200 text-gray-600"
@@ -106,15 +39,14 @@ export default function CartContainer() {
           <div className="flex items-center gap-4">
             <Image
               src={item.image}
-              alt={item.name}
+              alt='product image'
               className="w-20 h-20 object-cover rounded-lg"
               width={80}
               height={80}
             />
             <div className="flex flex-col gap-1">
-              <strong>{item.name}</strong>
+              <strong>{item.title}</strong>
               <small>Category: {item.category}</small>
-              <small>Size: {item.size}</small>
             </div>
           </div>
 
@@ -125,23 +57,18 @@ export default function CartContainer() {
           <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-lg font-bold select-none">
             <button
               className="text-gray-600 text-xl"
-              onClick={() => handleQuantity(item.id, "dec")}
+              onClick={() => updateQuantity(item.id, item.quantity - 1)}
             >
               −
             </button>
             {item.quantity}
             <button
               className="text-gray-600 text-xl"
-              onClick={() => handleQuantity(item.id, "inc")}
+              onClick={() => updateQuantity(item.id, item.quantity + 1)}
             >
               +
             </button>
           </div>
-
-          {/* Shipping */}
-          <p className="px-2">
-            {item.shipping === 0 ? "FREE" : `$${item.shipping.toFixed(2)}`}
-          </p>
 
           {/* Subtotal */}
           <p className="font-semibold">${calculateSubtotal(item).toFixed(2)}</p>
@@ -149,7 +76,7 @@ export default function CartContainer() {
           {/* Remove Button */}
           <button
             className="text-purple-500 text-lg hover:text-purple-700"
-            onClick={() => handleRemove(item.id)}
+            onClick={() => removeItem(item.id)}
           >
             🗑️
           </button>
@@ -181,7 +108,7 @@ export default function CartContainer() {
         <div className="flex flex-col gap-3 text-gray-600 bg-gray-100 px-10 py-8 mr-10 w-80">
           <div className="flex justify-between">
             <strong>Sub Total</strong>
-            <small>${calculateTotal().toFixed(2)}</small>
+            <small>${totalPrice.toFixed(2)}</small>
           </div>
           <div className="flex justify-between">
             <strong>Shipping</strong>
@@ -194,6 +121,12 @@ export default function CartContainer() {
           <hr className="border-t border-gray-400 my-5" />
           <button className="px-4 py-2 rounded-lg text-sm font-medium bg-purple-500 text-white hover:bg-purple-600">
             Proceed To Checkout
+          </button>
+          <button
+            className="px-4 py-2 rounded-lg text-sm font-medium text-red-500 hover:text-red-700"
+            onClick={clearCart}
+          >
+            Clear Cart
           </button>
         </div>
       </div>

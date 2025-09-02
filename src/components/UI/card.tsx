@@ -3,28 +3,23 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
-
-interface Product {
-  id: number
-  title: string
-  price: number
-  image: string
-  rating: { rate: number; count: number }
-}
+import { useCart } from "@/contexts/cart-context"
+import { Button } from "@/components/UI/button"
+import type { ApiProduct } from "@/lib/api"   // ✅ use ApiProduct
 
 interface ProductCardProps {
-  product: Product
+  product: ApiProduct
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
-  const [inCart, setInCart] = useState(false)
+export default function ProductCards({ product }: ProductCardProps) {
+  const { addItem, isInCart } = useCart()
   const [inWishlist, setInWishlist] = useState(false)
+  const productInCart = isInCart(product.id)
 
-  // Fake discount logic (20% higher original price)
   const originalPrice = product.price * 1.2
   const discount = Math.round(((originalPrice - product.price) / originalPrice) * 100)
 
-  const handleAddToCart = () => setInCart(true)
+  const handleAddToCart = () => addItem(product)
   const handleToggleWishlist = () => setInWishlist(!inWishlist)
 
   return (
@@ -93,19 +88,20 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Cart Button */}
-        {inCart ? (
-          <Link href="/cart" className="block w-full">
-            <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-              🛒 Go to Cart
-            </button>
+        {productInCart ? (
+          <Link href="/cart">
+            <Button className="w-full transition-all duration-200 hover:scale-105">
+              Go to Cart
+            </Button>
           </Link>
         ) : (
-          <button
+          <Button
+            className="w-full transition-all duration-200 hover:scale-105"
             onClick={handleAddToCart}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            aria-label={`Add ${product.title} to cart`}
           >
-            ➕ Add to Cart
-          </button>
+            Add to Cart
+          </Button>
         )}
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import type { Product, FilterOptions } from "../../app/Product/types";
 import ProductsList from "@/app/Product/ProductsList";
 import Image from "next/image";
+import type { ApiProduct } from "@/lib/api"
 
 interface Props {
   products: Product[];
@@ -134,7 +135,7 @@ export default function Filters({ products, defaultFilters }: Props) {
         <h3 className="font-bold text-lg mb-4">
           {filters.category === "all" ? "All Products" : `Category: ${filters.category}`}
         </h3>
-        <ProductsList products={filteredProducts} />
+        <ProductsList products={filteredProducts as unknown as ApiProduct[]} />
       </div>
     </div>
   );
