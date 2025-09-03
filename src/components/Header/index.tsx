@@ -1,6 +1,6 @@
-// app/components/Header.tsx
-import Link from "next/link"
-import type { Product } from "@/app/Product/types"
+import Link from "next/link";
+import type { Product } from "@/app/Product/types";
+import HeaderActions from "./HeaderAction";
 
 interface ApiProduct {
   id: number;
@@ -14,9 +14,11 @@ interface ApiProduct {
   };
 }
 
-// Simulated fetch function
+// Fetch products on the server
 async function getProducts(): Promise<Product[]> {
-  const res = await fetch("https://fakestoreapi.com/products");
+  const res = await fetch("https://fakestoreapi.com/products", {
+    cache: "no-store", // always fresh
+  });
 
   const data: ApiProduct[] = await res.json();
 
@@ -25,16 +27,15 @@ async function getProducts(): Promise<Product[]> {
     title: item.title,
     price: item.price,
     category: item.category,
-    rating: { rate: item.rating.rate , count: item.rating.count},
+    rating: { rate: item.rating.rate, count: item.rating.count },
     image: item.image,
     inStock: true,
   }));
 }
 
 export default async function Header() {
-  const products = await getProducts()
-
-  const categories = Array.from(new Set(products.map((p) => p.category)))
+  const products = await getProducts();
+  const categories = Array.from(new Set(products.map((p) => p.category)));
 
   return (
     <header className="bg-background border-b border-border sticky top-0 z-50">
@@ -42,18 +43,23 @@ export default async function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg font-serif">S</span>
-            </div>
-            <span className="text-xl font-serif font-bold text-foreground">AlmaLane</span>
+            <span className="text-xl font-serif font-bold text-foreground">
+              AlmaLane
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              href="/"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Home
             </Link>
-            <Link href="/Product" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              href="/Product"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Products
             </Link>
 
@@ -75,12 +81,23 @@ export default async function Header() {
               </div>
             </div>
 
-            <Link href="/about" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              href="/about"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               About
             </Link>
           </nav>
+
+          {/* Actions (Client Component) */}
+          <div className="flex gap-4">
+            <HeaderActions />
+          </div>
         </div>
       </div>
     </header>
-  )
+  );
 }
+
+// Import client-only component dynamically
+

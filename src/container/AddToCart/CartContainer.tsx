@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { CartItem, useCart } from "@/contexts/cart-context";
+import Link from "next/link";
 
 export default function CartContainer() {
   const {
@@ -17,6 +18,47 @@ export default function CartContainer() {
   const calculateShipping = (): number => (totalPrice > 100 ? 0 : 10);
 
   const grandTotal = (): number => totalPrice + calculateShipping();
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 -mt-20">
+        {/* Shopping bag icon */}
+        <svg
+          className="h-16 w-16 text-gray-400 mx-auto mb-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+        >
+          <path d="M6 2l1 4h10l1-4" />
+          <path d="M3 6h18l-2 14H5L3 6z" />
+          <path d="M9 10v2a3 3 0 006 0v-2" />
+        </svg>
+
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">Your cart is empty</h1>
+        <p className="text-gray-500 mb-6">
+          Looks like you haven&apos;t added any items to your cart yet.
+        </p>
+
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+        >
+          {/* Arrow Left Icon */}
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M15 19l-7-7 7-7" />
+          </svg>
+          Continue Shopping
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full my-10 font-sans">

@@ -1,10 +1,13 @@
 // types.tsx
 export interface Product {
   id: number
-  name: string
+  title: string
   price: number
   category: string
-  rating: number
+  rating: {
+    rate: number;
+    count: number;
+  }
   image: string
   inStock: boolean
 }
