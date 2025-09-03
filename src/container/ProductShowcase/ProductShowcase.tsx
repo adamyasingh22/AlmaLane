@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useCart } from "@/contexts/cart-context";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -15,6 +17,23 @@ interface Product {
 }
 
 export default function ProductShowcase({ product }: { product: Product }) {
+  const { addItem, isInCart } = useCart();
+
+  const handleAddToCart = () => {
+    const cartProduct = {
+      id: product.id,
+      title: product.name, 
+      price: product.price,
+      description: product.description || "No description available",
+      category: "General",
+      image: product.images[0],
+      rating: { rate: product.rating, count: product.reviewsCount },
+      quantity: 1, 
+    };
+
+    addItem(cartProduct);
+  };
+
   return (
     <div className="flex flex-wrap gap-4 bg-white px-3 text-gray-800 font-sans">
       {/* Gallery */}
@@ -39,7 +58,7 @@ export default function ProductShowcase({ product }: { product: Product }) {
           alt={product.name}
           width={400}
           height={300}
-          className=" object-cover"
+          className="object-cover"
         />
       </div>
 
@@ -57,38 +76,6 @@ export default function ProductShowcase({ product }: { product: Product }) {
           </span>
         </div>
 
-        {/* Sizes */}
-        {/* {product.sizes?.length > 0 && (
-          <div className="my-5">
-            <strong>Select Size:</strong>
-            <div className="mt-2 flex gap-2">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  className="px-3 py-1 border border-gray-400 rounded-md hover:bg-gray-100"
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-        )} */}
-
-        {/* Colors */}
-        {/* {product.colors?.length > 0 && (
-          <div className="flex flex-col gap-2 mb-5">
-            <strong>Colours Available:</strong>
-            <div className="flex gap-3 mt-1">
-              {product.colors.map((c, i) => (
-                <div
-                  key={i}
-                  className="w-6 h-6 rounded-full border border-gray-400 cursor-pointer"
-                  style={{ backgroundColor: c }}
-                ></div>
-              ))}
-            </div>
-          </div>
-        )} */}
         {/* Size Selector */}
         <div className="my-5">
           <strong>Select Size:</strong>
@@ -114,11 +101,25 @@ export default function ProductShowcase({ product }: { product: Product }) {
             <div className="w-5 h-5 rounded-full cursor-pointer bg-fuchsia-400"></div>
           </div>
         </div>
+
         <div className="flex items-center gap-5 my-5">
-          <button className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700">
-            Add to cart
-          </button>
-          <span className="text-xl font-semibold">$63.00</span>
+          {isInCart(product.id) ? (
+            <Link href="/cart">
+            <button
+              className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-green-700"
+            >
+              Added to Cart
+            </button>
+            </Link>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700"
+            >
+              Add to cart
+            </button>
+          )}
+          <span className="text-xl font-semibold">${product.price}</span>
         </div>
 
         {/* Features */}
