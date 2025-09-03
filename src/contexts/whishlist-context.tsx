@@ -4,20 +4,7 @@ import type React from "react"
 import { createContext, useContext, useReducer, useEffect } from "react"
 import { ApiProduct } from "@/lib/api"
 
-export interface CartItem extends ApiProduct {
-  quantity: number
-}
-
-export interface WishlistItem {
-  id: number
-  title: string
-  price: number
-  image: string
-  category: string
-  rating: {
-    rate: number
-    count: number
-  }
+export interface WishlistItem extends ApiProduct {
   addedAt: string
 }
 
@@ -47,12 +34,7 @@ function wishlistReducer(state: WishlistState, action: WishlistAction): Wishlist
       }
 
       const newItem: WishlistItem = {
-        id: action.payload.id,
-        title: action.payload.title,
-        price: action.payload.price,
-        image: action.payload.image,
-        category: action.payload.category,
-        rating: action.payload.rating,
+        ...action.payload,
         addedAt: new Date().toISOString(),
       }
 

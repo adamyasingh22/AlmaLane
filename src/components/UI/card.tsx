@@ -2,10 +2,10 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
 import { Button } from "@/components/UI/button"
 import type { ApiProduct } from "@/lib/api"
+import { useWishlist } from "@/contexts/whishlist-context"
 
 interface ProductCardProps {
   product: ApiProduct
@@ -13,14 +13,15 @@ interface ProductCardProps {
 
 export default function ProductCards({ product }: ProductCardProps) {
   const { addItem, isInCart } = useCart()
-  const [inWishlist, setInWishlist] = useState(false)
+  const { toggleItem, isInWishlist } = useWishlist()
   const productInCart = isInCart(product.id)
+  const productInWishlist = isInWishlist(product.id)
 
   const originalPrice = product.price * 1.2
   const discount = Math.round(((originalPrice - product.price) / originalPrice) * 100)
 
   const handleAddToCart = () => addItem(product)
-  const handleToggleWishlist = () => setInWishlist(!inWishlist)
+  const handleToggleWishlist = () => toggleItem(product)
 
   return (
     <div className="group relative flex flex-col border rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 bg-white overflow-hidden">
@@ -47,7 +48,7 @@ export default function ProductCards({ product }: ProductCardProps) {
       >
         <span
           className={`text-lg ${
-            inWishlist
+            productInWishlist
               ? "text-red-500 scale-110"
               : "text-gray-500 hover:text-red-500 hover:scale-110"
           }`}
