@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@/app/Product/types";
 import HeaderActions from "./HeaderAction";
+import SearchBar from "./SearchBar";
 
 interface ApiProduct {
   id: number;
@@ -17,7 +18,7 @@ interface ApiProduct {
 // Fetch products on the server
 async function getProducts(): Promise<Product[]> {
   const res = await fetch("https://fakestoreapi.com/products", {
-    cache: "no-store", // always fresh
+    cache: "no-store",
   });
 
   const data: ApiProduct[] = await res.json();
@@ -88,6 +89,9 @@ export default async function Header() {
               About
             </Link>
           </nav>
+          <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <SearchBar />
+          </div>
 
           {/* Actions (Client Component) */}
           <div className="flex gap-4">
@@ -99,5 +103,4 @@ export default async function Header() {
   );
 }
 
-// Import client-only component dynamically
 
