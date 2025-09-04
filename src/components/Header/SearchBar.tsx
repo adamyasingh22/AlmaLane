@@ -82,7 +82,10 @@ export default function SearchBar() {
           <button
             type="button"
             className="p-2 hover:bg-gray-100 rounded-md"
-            onClick={() => setIsSearchOpen(false)}
+            onClick={() => {
+                setIsSearchOpen(false)
+                setQuery("");
+            }}
           >
             <svg
               className="h-5 w-5 text-gray-700"
