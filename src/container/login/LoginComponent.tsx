@@ -86,7 +86,7 @@ export default function LoginContainer() {
         {/* Footer */}
         <div className="mt-4 text-sm text-gray-700">
           Don’t have an account?
-          <a href="/Signup" className="ml-1 font-bold text-purple-600 hover:underline">
+          <a href="/signup" className="ml-1 font-bold text-purple-600 hover:underline">
             Sign up
           </a>
         </div>
