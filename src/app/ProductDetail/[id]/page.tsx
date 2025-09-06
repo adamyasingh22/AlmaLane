@@ -4,19 +4,16 @@ import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
 interface ProductDetailPageProps {
-  params?: { id: string | string[] }; // optional & can be string[]
+  params: { id: string | string[] }; // must allow string[]
   searchParams?: Record<string, string | string[]>; // optional
 }
 
 export default async function ProductDetailPage({
   params,
-  searchParams,
 }: ProductDetailPageProps) {
-  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
-  if (!id) {
-    return <p className="text-red-500">Product ID not provided</p>;
-  }
+  if (!id) return <p className="text-red-500">Product ID not provided</p>;
 
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
     cache: "no-store",
