@@ -3,25 +3,27 @@ import Header from "@/components/Header";
 import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
-// Use Next.js expected type
 interface ProductDetailPageProps {
-  params: Record<string, string | string[]>;
+  params: {
+    id: string | string[];
+  };
   searchParams?: Record<string, string | string[]>;
 }
 
 export default async function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
-  // Normalize ID
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
-  if (!id) return <p className="text-red-500">Product ID not provided</p>;
+  if (!id)
+    return <p className="text-red-500">Product ID not provided</p>;
 
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
     cache: "no-store",
   });
 
-  if (!res.ok) return <p className="text-red-500">Failed to load product</p>;
+  if (!res.ok)
+    return <p className="text-red-500">Failed to load product</p>;
 
   const product = await res.json();
 
