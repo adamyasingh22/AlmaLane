@@ -3,20 +3,22 @@ import Header from "@/components/Header";
 import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
+// PageProps compatible type
 interface ProductDetailPageProps {
-  params: { id: string | string[] }; // must allow string[]
+  params: { id: string | string[] }; // allow string[] for App Router
   searchParams?: Record<string, string | string[]>; // optional
 }
 
 export default async function ProductDetailPage({
-  params,
+  params, // include if needed
 }: ProductDetailPageProps) {
+  // normalize id in case it's an array
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   if (!id) return <p className="text-red-500">Product ID not provided</p>;
 
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    cache: "no-store",
+    cache: "no-store", // optional
   });
 
   if (!res.ok) {
@@ -33,8 +35,8 @@ export default async function ProductDetailPage({
     images: [product.image],
     rating: product.rating?.rate ?? 0,
     reviewsCount: product.rating?.count ?? 0,
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["#000000", "#ffffff", "#ff0000"],
+    sizes: ["S", "M", "L", "XL"], 
+    colors: ["#000000", "#ffffff", "#ff0000"], 
   };
 
   return (

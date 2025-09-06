@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Filters from "@/container/CategoriesContainer/filter";
 import type { Product, FilterOptions } from "./types";
-import Footer from "@/components/Footer";
 import CategoryDiscription from "@/container/CategoriesContainer/CategoryDiscription";
 
 interface ApiProduct {
