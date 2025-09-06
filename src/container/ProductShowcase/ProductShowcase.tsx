@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useCart } from "@/contexts/cart-context";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "@/store/cartSlice";
+import { RootState } from "@/store";
 
 interface Product {
   id: number;
@@ -17,21 +19,24 @@ interface Product {
 }
 
 export default function ProductShowcase({ product }: { product: Product }) {
-  const { addItem, isInCart } = useCart();
+  const dispatch = useDispatch();
+
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const isInCart = cartItems.some((item) => item.id === product.id);
 
   const handleAddToCart = () => {
-    const cartProduct = {
-      id: product.id,
-      title: product.name, 
-      price: product.price,
-      description: product.description || "No description available",
-      category: "General",
-      image: product.images[0],
-      rating: { rate: product.rating, count: product.reviewsCount },
-      quantity: 1, 
-    };
-
-    addItem(cartProduct);
+    dispatch(
+      addItem({
+        id: product.id,
+        title: product.name,
+        price: product.price,
+        description: product.description || "No description available",
+        category: "General",
+        image: product.images[0],
+        rating: { rate: product.rating, count: product.reviewsCount },
+        quantity: 1, 
+      })
+    );
   };
 
   return (
@@ -39,7 +44,7 @@ export default function ProductShowcase({ product }: { product: Product }) {
       {/* Gallery */}
       <div className="flex flex-1 min-w-[300px] gap-20 justify-center">
         {/* Thumbnails */}
-        <div className="flex flex-col gap-3 mt-[30%] ">
+        <div className="flex flex-col gap-3 mt-[30%]">
           {product.images.map((img, idx) => (
             <Image
               key={idx}
@@ -103,13 +108,11 @@ export default function ProductShowcase({ product }: { product: Product }) {
         </div>
 
         <div className="flex items-center gap-5 my-5">
-          {isInCart(product.id) ? (
+          {isInCart ? (
             <Link href="/cart">
-            <button
-              className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-green-700"
-            >
-              Added to Cart
-            </button>
+              <button className="bg-green-600 text-white px-6 py-2 rounded-md font-medium hover:bg-green-700">
+                Added to Cart
+              </button>
             </Link>
           ) : (
             <button

@@ -1,33 +1,40 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useWishlist } from "@/contexts/whishlist-context"
-import { useCart } from "@/contexts/cart-context"
-import type { WishlistItem } from "@/contexts/whishlist-context"
-import Image from "next/image"
+import Link from "next/link";
+import { useWishlist } from "@/contexts/whishlist-context"; 
+import type { WishlistItem } from "@/contexts/whishlist-context";
+import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store"; 
+import { addItem } from "@/store/cartSlice"; 
+import { selectCartItems } from "@/store/cartSlice"; 
 
 export default function WishlistPage() {
-  const { items, totalItems, removeItem, clearWishlist } = useWishlist()
-  const { addItem: addToCart, isInCart } = useCart()
+  const { items, totalItems, removeItem, clearWishlist } = useWishlist();
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => selectCartItems(state)); 
+
+  const isInCart = (id: number) => cartItems.some((c) => c.id === id);
 
   const handleAddToCart = (item: WishlistItem) => {
     const product = {
       id: item.id,
       title: item.title,
       price: item.price,
-      description: item.category || "No description available", // ✅ safe fallback
+      description: item.category || "No description available",
       category: item.category,
       image: item.image,
       rating: item.rating,
-      quantity: 1, // ✅ required for CartItem
-    }
-    addToCart(product)
-  }
+      quantity: 1,
+    };
+    dispatch(addItem(product)); 
+  };
 
   const handleMoveToCart = (item: WishlistItem) => {
-    handleAddToCart(item)
-    removeItem(item.id)
-  }
+    handleAddToCart(item);
+    removeItem(item.id);
+  };
 
   if (items.length === 0) {
     return (
@@ -48,7 +55,7 @@ export default function WishlistPage() {
           </Link>
         </div>
       </main>
-    )
+    );
   }
 
   return (
@@ -176,5 +183,5 @@ export default function WishlistPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

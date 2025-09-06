@@ -2,31 +2,38 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useCart } from "@/contexts/cart-context"
 import { Button } from "@/components/UI/button"
 import type { ApiProduct } from "@/lib/api"
-import { useWishlist } from "@/contexts/whishlist-context"
+import { useWishlist } from "@/contexts/whishlist-context" 
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/store"
+import { addItem } from "@/store/cartSlice"
 
 interface ProductCardProps {
   product: ApiProduct
 }
 
 export default function ProductCards({ product }: ProductCardProps) {
-  const { addItem, isInCart } = useCart()
+  const dispatch = useDispatch()
   const { toggleItem, isInWishlist } = useWishlist()
-  const productInCart = isInCart(product.id)
+
+  const items = useSelector((state: RootState) => state.cart.items)
+  const productInCart = items.some((item) => item.id === product.id)
   const productInWishlist = isInWishlist(product.id)
 
   const originalPrice = product.price * 1.2
   const discount = Math.round(((originalPrice - product.price) / originalPrice) * 100)
 
-  const handleAddToCart = () => addItem(product)
+  const handleAddToCart = () => dispatch(addItem({ ...product, quantity: 1 }))
   const handleToggleWishlist = () => toggleItem(product)
 
   return (
     <div className="group relative flex flex-col border rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 bg-white overflow-hidden">
       {/* Image Section */}
-      <Link href={`/ProductDetail/${product.id}`} className="relative w-full h-60 sm:h-72 md:h-80 flex items-center justify-center overflow-hidden">
+      <Link
+        href={`/ProductDetail/${product.id}`}
+        className="relative w-full h-60 sm:h-72 md:h-80 flex items-center justify-center overflow-hidden"
+      >
         <Image
           src={product.image || "/placeholder.png"}
           alt={product.title}
