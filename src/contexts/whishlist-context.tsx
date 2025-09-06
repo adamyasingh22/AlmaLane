@@ -15,7 +15,7 @@ interface WishlistState {
 
 type WishlistAction =
   | { type: "ADD_ITEM"; payload: ApiProduct }
-  | { type: "REMOVE_ITEM"; payload: number }
+  | { type: "REMOVE_ITEM"; payload: string }
   | { type: "CLEAR_WISHLIST" }
   | { type: "LOAD_WISHLIST"; payload: WishlistItem[] }
 
@@ -27,10 +27,9 @@ const initialState: WishlistState = {
 function wishlistReducer(state: WishlistState, action: WishlistAction): WishlistState {
   switch (action.type) {
     case "ADD_ITEM": {
-      // Check if item already exists
       const existingItem = state.items.find((item) => item.id === action.payload.id)
       if (existingItem) {
-        return state // Item already in wishlist
+        return state 
       }
 
       const newItem: WishlistItem = {
@@ -72,9 +71,9 @@ function wishlistReducer(state: WishlistState, action: WishlistAction): Wishlist
 
 interface WishlistContextType extends WishlistState {
   addItem: (product: ApiProduct) => void
-  removeItem: (id: number) => void
+  removeItem: (id: string) => void
   clearWishlist: () => void
-  isInWishlist: (id: number) => boolean
+  isInWishlist: (id: string) => boolean
   toggleItem: (product: ApiProduct) => void
 }
 
@@ -105,7 +104,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: "ADD_ITEM", payload: product })
   }
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     dispatch({ type: "REMOVE_ITEM", payload: id })
   }
 
@@ -113,7 +112,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: "CLEAR_WISHLIST" })
   }
 
-  const isInWishlist = (id: number) => {
+  const isInWishlist = (id: string) => {
     return state.items.some((item) => item.id === id)
   }
 
