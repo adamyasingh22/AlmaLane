@@ -4,9 +4,7 @@ import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
 interface ProductDetailPageProps {
-  params: {
-    id: string; 
-  };
+  params: Record<string, string>; 
   searchParams?: Record<string, string | string[]>;
 }
 
@@ -15,15 +13,13 @@ export default async function ProductDetailPage({
 }: ProductDetailPageProps) {
   const id = params.id;
 
-  if (!id)
-    return <p className="text-red-500">Product ID not provided</p>;
+  if (!id) return <p className="text-red-500">Product ID not provided</p>;
 
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
     cache: "no-store",
   });
 
-  if (!res.ok)
-    return <p className="text-red-500">Failed to load product</p>;
+  if (!res.ok) return <p className="text-red-500">Failed to load product</p>;
 
   const product = await res.json();
 
