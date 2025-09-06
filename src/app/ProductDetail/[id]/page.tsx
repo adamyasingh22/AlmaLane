@@ -3,27 +3,25 @@ import Header from "@/components/Header";
 import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
-// PageProps compatible type
+// Use Next.js expected type
 interface ProductDetailPageProps {
-  params: { id: string | string[] }; // allow string[] for App Router
-  searchParams?: Record<string, string | string[]>; // optional
+  params: Record<string, string | string[]>;
+  searchParams?: Record<string, string | string[]>;
 }
 
 export default async function ProductDetailPage({
-  params, // include if needed
+  params,
 }: ProductDetailPageProps) {
-  // normalize id in case it's an array
+  // Normalize ID
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   if (!id) return <p className="text-red-500">Product ID not provided</p>;
 
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    cache: "no-store", // optional
+    cache: "no-store",
   });
 
-  if (!res.ok) {
-    return <p className="text-red-500">Failed to load product</p>;
-  }
+  if (!res.ok) return <p className="text-red-500">Failed to load product</p>;
 
   const product = await res.json();
 
@@ -35,8 +33,8 @@ export default async function ProductDetailPage({
     images: [product.image],
     rating: product.rating?.rate ?? 0,
     reviewsCount: product.rating?.count ?? 0,
-    sizes: ["S", "M", "L", "XL"], 
-    colors: ["#000000", "#ffffff", "#ff0000"], 
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#000000", "#ffffff", "#ff0000"],
   };
 
   return (
