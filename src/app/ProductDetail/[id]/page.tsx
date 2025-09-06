@@ -5,7 +5,7 @@ import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
 interface ProductDetailPageProps {
   params: {
-    id: string | string[];
+    id: string; 
   };
   searchParams?: Record<string, string | string[]>;
 }
@@ -13,7 +13,7 @@ interface ProductDetailPageProps {
 export default async function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
-  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const id = params.id;
 
   if (!id)
     return <p className="text-red-500">Product ID not provided</p>;
