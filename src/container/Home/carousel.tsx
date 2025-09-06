@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
 
 const images = [
   {
@@ -18,6 +19,7 @@ const images = [
 ];
 
 const CarouselHome = () => {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -49,7 +51,8 @@ const CarouselHome = () => {
             <Image
               src={item.src}
               alt={`Slide ${index + 1}`}
-              fill
+              width={1800}
+              height={500}
               className='object-cover'
               priority 
             />
@@ -62,7 +65,9 @@ const CarouselHome = () => {
         <p className=" text-m md:text-lg mb-2">T-Shirt / Tops</p>
         <h1 className="text-2xl md:text-4xl font-bold">{images[currentIndex].caption}</h1>
         <p className="text-xl mt-3">cool / colorful / comfy</p>
-        <button className="mt-5 px-6 py-3  text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
+        <button 
+         onClick={() => router.push("/Product")}
+        className="mt-5 px-6 py-3  text-sm md:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-200">
           Shop Now
         </button>
       </div>

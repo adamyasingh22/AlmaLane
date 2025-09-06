@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 const categoriesMen = [
   {
@@ -63,6 +64,7 @@ const CategoriesMen = ({ heading }: { heading: string }) => {
       </div>
 
       {/* Grid */}
+      <Link href="/Product" >
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {categoriesMen.map((category) => (
           <div key={category.id} className="text-left">
@@ -90,6 +92,7 @@ const CategoriesMen = ({ heading }: { heading: string }) => {
           </div>
         ))}
       </div>
+      </Link>
     </div>
   );
 };

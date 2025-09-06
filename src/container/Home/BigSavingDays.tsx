@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const cardData = [
   {
@@ -55,6 +56,7 @@ const cardData = [
 ];
 
 const BigSavingDays = () => {
+  const router = useRouter();
   return (
     <div className="w-[90%] mx-auto flex flex-col p-5">
       {/* Heading */}
@@ -89,7 +91,9 @@ const BigSavingDays = () => {
               <p className="text-sm md:text-base">{item.subtitle}</p>
               <p className="text-sm md:text-base font-medium mt-2">{item.discount}</p>
               <div className="text-xl mt-2 pl-10">↓</div>
-              <button className="mt-3 bg-white text-black font-semibold rounded-full px-4 py-2 text-sm hover:bg-black hover:text-white transition">
+              <button 
+              onClick={() => router.push("/Product")}
+              className="mt-3 bg-white text-black font-semibold rounded-full px-4 py-2 text-sm hover:bg-black hover:text-white transition">
                 {item.button}
               </button>
             </div>
