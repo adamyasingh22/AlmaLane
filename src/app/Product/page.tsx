@@ -2,11 +2,21 @@ import Header from "@/components/Header";
 import ProductsPage from "./ProductsPage";
 import Footer from "@/components/Footer";
 
-export default function ProductPage({ searchParams }: { searchParams?: { category?: string } }) {
+interface SearchParams {
+  category?: string;
+}
+
+export default async function ProductPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const resolvedSearchParams = await searchParams;
+
   return (
     <>
       <Header />
-      <ProductsPage searchParams={searchParams ?? {}} /> 
+      <ProductsPage searchParams={resolvedSearchParams ?? {}} />
       <Footer/>
     </>
   );

@@ -54,7 +54,6 @@ export default function ProductsPage({ searchParams = {} }: { searchParams?: { c
         <Filters products={products} defaultFilters={defaultFilters} />
       </div>
       <CategoryDiscription />
-      <Footer />
     </div>
   );
 }
