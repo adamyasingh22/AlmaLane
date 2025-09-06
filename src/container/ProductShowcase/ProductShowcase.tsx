@@ -7,7 +7,7 @@ import { addItem } from "@/store/cartSlice";
 import { RootState } from "@/store";
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
   description?: string;
@@ -22,7 +22,7 @@ export default function ProductShowcase({ product }: { product: Product }) {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  const isInCart = cartItems.some((item) => item.id === product.id);
+  const isInCart = cartItems.some((item) => item.id == product.id);
 
   const handleAddToCart = () => {
     dispatch(

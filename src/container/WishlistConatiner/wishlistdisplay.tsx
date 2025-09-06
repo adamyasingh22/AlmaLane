@@ -15,7 +15,7 @@ export default function WishlistPage() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => selectCartItems(state)); 
 
-  const isInCart = (id: number) => cartItems.some((c) => c.id === id);
+  const isInCart = (id: string) => cartItems.some((c) => c.id === id);
 
   const handleAddToCart = (item: WishlistItem) => {
     const product = {
