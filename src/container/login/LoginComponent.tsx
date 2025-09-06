@@ -1,15 +1,45 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, selectIsLoading, selectAuth, loadUser } from "@/store/authSlice";
+import type { AppDispatch } from "@/store";
+import { useRouter } from "next/navigation";
 
 export default function LoginContainer() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
-  const handleSignIn = () => {
-    console.log('Logging in with:', { email, password });
-    // call your AuthContext login function here
+  const isLoading = useSelector(selectIsLoading);
+  const { error, isAuthenticated } = useSelector(selectAuth);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      alert("Please enter both email and password");
+      return;
+    }
+
+    const result = await dispatch(loginUser({ email, password }));
+
+    if (loginUser.fulfilled.match(result)) {
+      console.log("Login successful:", result.payload);
+    } else {
+      console.error("Login failed:", result.payload);
+    }
   };
 
   return (
@@ -21,7 +51,7 @@ export default function LoginContainer() {
           alt="Login Visual"
           className="w-full h-full object-cover"
           width={800}
-            height={600}
+          height={600}
         />
       </div>
 
@@ -31,12 +61,12 @@ export default function LoginContainer() {
 
         {/* Social Buttons */}
         <button className="flex items-center justify-center gap-3 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-600 py-2 mb-3 hover:bg-gray-100">
-          <Image src="/globe.svg" alt="Google" className="w-5 h-5" width={20} height={20}/>
+          <Image src="/globe.svg" alt="Google" className="w-5 h-5" width={20} height={20} />
           Continue With Google
         </button>
 
         <button className="flex items-center justify-center gap-3 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-600 py-2 mb-3 hover:bg-gray-100">
-          <Image src="/twitter.png" alt="Twitter" className="w-5 h-5" width={20} height={20}/>
+          <Image src="/twitter.png" alt="Twitter" className="w-5 h-5" width={20} height={20} />
           Continue With Twitter
         </button>
 
@@ -75,18 +105,24 @@ export default function LoginContainer() {
           </a>
         </div>
 
+        {/* Error Message */}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
         {/* Sign In Button */}
         <button
           onClick={handleSignIn}
-          className="w-full bg-purple-600 text-white font-semibold py-3 rounded-lg hover:bg-purple-700"
+          disabled={isLoading}
+          className={`w-full bg-purple-600 text-white font-semibold py-3 rounded-lg hover:bg-purple-700 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Sign In
+          {isLoading ? "Signing In..." : "Sign In"}
         </button>
 
         {/* Footer */}
         <div className="mt-4 text-sm text-gray-700">
           Don’t have an account?
-          <a href="/signup" className="ml-1 font-bold text-purple-600 hover:underline">
+          <a href="/auth/signup" className="ml-1 font-bold text-purple-600 hover:underline">
             Sign up
           </a>
         </div>

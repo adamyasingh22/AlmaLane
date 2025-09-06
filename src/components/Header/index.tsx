@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Product } from "@/app/Product/types";
 import HeaderActions from "./HeaderAction";
 import SearchBar from "./SearchBar";
+import UserIcon from "./UserIcon";
 
 interface ApiProduct {
   id: number;
@@ -95,7 +96,9 @@ export default async function Header() {
 
           {/* Actions (Client Component) */}
           <div className="flex gap-4">
+            <UserIcon/>
             <HeaderActions />
+
           </div>
         </div>
       </div>
