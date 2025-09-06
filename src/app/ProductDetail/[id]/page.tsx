@@ -3,13 +3,23 @@ import Header from "@/components/Header";
 import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
 
+interface ProductDetailPageProps {
+  params?: { id: string | string[] }; // optional & can be string[]
+  searchParams?: Record<string, string | string[]>; // optional
+}
+
 export default async function ProductDetailPage({
   params,
-}: {
-  params: { id: string };
-}) {
-  const res = await fetch(`https://fakestoreapi.com/products/${params.id}`, {
-    cache: "no-store", 
+  searchParams,
+}: ProductDetailPageProps) {
+  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
+
+  if (!id) {
+    return <p className="text-red-500">Product ID not provided</p>;
+  }
+
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -23,18 +33,19 @@ export default async function ProductDetailPage({
     name: product.title,
     price: product.price,
     description: product.description,
-    images: [product.image], 
+    images: [product.image],
     rating: product.rating?.rate ?? 0,
     reviewsCount: product.rating?.count ?? 0,
-    sizes: ["S", "M", "L", "XL"], // since fakestore has no size data
-    colors: ["#000000", "#ffffff", "#ff0000"], // colors
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["#000000", "#ffffff", "#ff0000"],
   };
-    return (
-        <div>
-            <Header/>
-            <ProductShowcase product={mappedProduct}/>
-            <ProductDescription/>
-            <Footer/>
-        </div>
-    )
+
+  return (
+    <div>
+      <Header />
+      <ProductShowcase product={mappedProduct} />
+      <ProductDescription />
+      <Footer />
+    </div>
+  );
 }
