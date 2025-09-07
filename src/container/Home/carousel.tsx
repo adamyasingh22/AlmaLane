@@ -51,7 +51,7 @@ const CarouselHome = () => {
             <Image
               src={item.src}
               alt={`Slide ${index + 1}`}
-              width={1800}
+              width={2000}
               height={500}
               className='object-cover'
               priority 
