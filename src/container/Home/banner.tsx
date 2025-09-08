@@ -50,7 +50,8 @@ const Banner = () => {
             In our journey to make your everyday fashion Euphorioa presents
             EVERYDAY wear range – Comfortable & Affordable fashion 24*7
           </p>
-          <button className="mt-4 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-300 transition">
+          <button className="mt-4 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-bold bg-white text-black rounded-md hover:bg-gray-300 transition"
+          onClick={() => window.location.href = '/Product'}>
             Shop Now
           </button>
         </div>
