@@ -74,8 +74,8 @@ export default function UserIcon() {
 
       {/* Dropdown Menu */}
       {menuOpen && (
-        <div className="absolute right-0 mt-2 w-60 bg-white border rounded-lg shadow-md z-50">
-          <div className="px-4 py-2 text-sm text-gray-600 border-b">
+        <div className="absolute right-0.5 mt-2 w-50 bg-white border rounded-lg shadow-md z-50">
+          <div className="px-2 py-2 text-sm text-gray-600 border-b">
             {user?.email}
           </div>
           <button
@@ -83,7 +83,7 @@ export default function UserIcon() {
               dispatch(logout());
               setMenuOpen(false);
             }}
-            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+            className="w-full text-center px-2 py-2  text-sm text-red-600 hover:bg-gray-100"
           >
             Logout
           </button>
