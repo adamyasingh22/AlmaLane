@@ -2,12 +2,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProductDescription from "@/container/ProductShowcase/ProductDiscription";
 import ProductShowcase from "@/container/ProductShowcase/ProductShowcase";
-import { use } from "react"
 
-// interface ProductDetailPageProps {
-//   params: Record<string, string>; 
-//   searchParams?: Record<string, string | string[]>;
-// }
 
 export default async function ProductDetailPage({params}: {params: Promise<{ id: string }>}) {
   const { id } = await params;

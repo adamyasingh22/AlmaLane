@@ -86,7 +86,7 @@ export default function WishlistPage() {
               key={item.id}
               className="relative group border rounded-lg shadow-sm hover:shadow-lg transition overflow-hidden bg-white"
             >
-              <Link href={`/products/${item.id}`}>
+              <Link href={`/ProductDetail/${item.id}`}>
                 <div className="relative overflow-hidden cursor-pointer">
                   <Image
                     src={item.image || "/placeholder.png"}

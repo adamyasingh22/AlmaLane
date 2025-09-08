@@ -67,7 +67,10 @@ export default function CartContainer() {
             className="flex flex-col md:grid md:grid-cols-[3fr_1fr_1fr_1fr_0.5fr] md:items-center md:py-4 md:border-b"
           >
             {/* Product Details */}
-            <div className="flex items-center gap-4">
+            <Link 
+             href={`/ProductDetail/${item.id}`}
+             className="flex items-center gap-4"
+            >
               <Image
                 src={item.image}
                 alt="product image"
@@ -79,7 +82,7 @@ export default function CartContainer() {
                 <strong className="text-sm md:text-base">{item.title}</strong>
                 <small className="text-xs text-gray-500">Category: {item.category}</small>
               </div>
-            </div>
+            </Link>
 
             {/* Price */}
             <p className="font-semibold text-gray-700 text-sm md:text-base text-center mt-2 md:mt-0">
