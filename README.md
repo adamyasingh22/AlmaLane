@@ -15,6 +15,7 @@ It provides a seamless shopping experience with **authentication, cart & wishlis
 Check out the live version of **AlmaLane** here:  
 
 👉 [Live Project on Netlify](https://almalane.netlify.app/)
+👉 [Figma Used](https://tinyurl.com/kfrau46v)
 
 ## ⚡ Tech Stack  
 
