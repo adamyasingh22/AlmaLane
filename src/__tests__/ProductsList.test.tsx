@@ -19,7 +19,7 @@ const sampleProducts: ApiProduct[] = [
 
 describe("ProductsList", () => {
   beforeEach(() => {
-    mockedUseSearch.mockReturnValue({ query: "" }); // default no filter
+    mockedUseSearch.mockReturnValue({ query: "" }); 
   });
 
   it("renders all products when no query", () => {
